@@ -1,44 +1,34 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-  <modelVersion>4.0.0</modelVersion>
-
-  <parent>
-    <groupId>com.example.maven-project</groupId>
-    <artifactId>maven-project</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
-
-  <artifactId>webapp</artifactId>
-  <packaging>war</packaging>
-  <name>Webapp</name>
-  <description>Webapp.</description>
-
-  <build>
-    <finalName>${project.artifactId}</finalName>
-
-    <plugins>
-      <plugin>
-        <groupId>org.mortbay.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
-  <dependencies>
-
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-
+<?xml version="1.0" ?> 
+<project name="AntWarFileExample" default="war">
+ 
+    <path id="compile.classpath">
+        <fileset dir="WebContent/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+     
+    <target name="init">
+        <mkdir dir="build/classes"/>
+        <mkdir dir="dist" />
+    </target>
+     
+    <target name="compile" depends="init" >
+        <javac destdir="build/classes" debug="true" srcdir="src">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+     
+    <target name="war" depends="compile">
+        <war destfile="dist/MyWebApplication.war" webxml="WebContent/WEB-INF/web.xml">
+            <fileset dir="WebContent"/>
+            <lib dir="WebContent/WEB-INF/lib"/>
+            <classes dir="build/classes"/>
+        </war>
+    </target>
+     
+    <target name="clean">
+        <delete dir="dist" />
+        <delete dir="build" />
+    </target>
+     
 </project>
