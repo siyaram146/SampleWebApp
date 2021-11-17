@@ -11,7 +11,9 @@
         <mkdir dir="build/classes"/>
         <mkdir dir="dist" />
     </target>
-     
+     <properties>
+  <sonar.projectKey>abc</sonar.projectKey>
+</properties>
     <target name="compile" depends="init" >
         <javac destdir="build/classes" debug="true" srcdir="src">
             <classpath refid="compile.classpath"/>
